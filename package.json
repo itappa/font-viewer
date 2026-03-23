@@ -1,0 +1,54 @@
+{
+  "name": "font-viewer",
+  "version": "1.1.0",
+  "description": "Font viewer application",
+  "packageManager": "bun@1.2.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "build": "electron-builder --mac",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux",
+    "build:all": "electron-builder --mac --win --linux",
+    "build:dir": "electron-builder --mac --dir"
+  },
+  "keywords": ["font", "viewer", "electron"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "font-list": "^1.4.5"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.fontviewer.app",
+    "productName": "Font Viewer",
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": "dmg"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "dir"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Utility"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/renderer/**/*",
+      "scripts/**/*"
+    ]
+  }
+}
