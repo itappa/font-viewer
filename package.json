@@ -1,24 +1,8 @@
 {
   "name": "font-viewer",
   "version": "1.1.0",
-  "description": "Font viewer application",
-  "packageManager": "bun@1.2.0",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "dev": "electron .",
-    "build": "electron-builder --mac",
-    "build:win": "electron-builder --win",
-    "build:linux": "electron-builder --linux",
-    "build:all": "electron-builder --mac --win --linux",
-    "build:dir": "electron-builder --mac --dir"
-  },
-  "keywords": ["font", "viewer", "electron"],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "font-list": "^1.4.5"
-  },
+  "main": "main.js",
   "devDependencies": {
     "electron": "^28.0.0",
     "electron-builder": "^25.1.8"
@@ -26,6 +10,7 @@
   "build": {
     "appId": "com.fontviewer.app",
     "productName": "Font Viewer",
+    "compression": "maximum",
     "mac": {
       "category": "public.app-category.utilities",
       "target": "dmg"
@@ -50,5 +35,18 @@
       "src/renderer/**/*",
       "scripts/**/*"
     ]
+  },
+  "description": "Font viewer application",
+  "keywords": ["font", "viewer", "electron"],
+  "license": "ISC",
+  "packageManager": "bun@1.2.0",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "build": "electron-builder --mac",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux",
+    "build:all": "electron-builder --mac --win --linux",
+    "build:dir": "electron-builder --mac --dir"
   }
 }

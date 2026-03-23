@@ -4,9 +4,6 @@
   "workspaces": {
     "": {
       "name": "font-viewer",
-      "dependencies": {
-        "font-list": "^1.4.5",
-      },
       "devDependencies": {
         "electron": "^28.0.0",
         "electron-builder": "^25.1.8",
@@ -281,8 +278,6 @@
     "fd-slicer": ["fd-slicer@1.1.0", "", { "dependencies": { "pend": "1.2.0" } }, "sha512-cE1qsB/VwyQozZ+q1dGxR8LBYNZeofhEdUNGSMbQD3Gw2lAzX9Zb3uIU6Ebc/Fmyjo9AWWfnn0AUCHqtevs/8g=="],
 
     "filelist": ["filelist@1.0.6", "", { "dependencies": { "minimatch": "5.1.9" } }, "sha512-5giy2PkLYY1cP39p17Ech+2xlpTRL9HLspOfEgm0L6CwBXBTgsK5ou0JtzYuepxkaQ/tvhCFIJ5uXo0OrM2DxA=="],
-
-    "font-list": ["font-list@1.6.0", "", {}, "sha512-gI6N38fcq4er2BkKeW33SQt5nLMGX/GuT7mgWa3OiOZSQAJ3b6ZiCg3hPqlnnaULW/pcR1R7sUMrN6HfovXKAg=="],
 
     "foreground-child": ["foreground-child@3.3.1", "", { "dependencies": { "cross-spawn": "7.0.6", "signal-exit": "4.1.0" } }, "sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw=="],
 

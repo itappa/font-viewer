@@ -125,11 +125,12 @@ bun run build:all
 | プラットフォーム | 方式 | 特徴 |
 |----------------|------|------|
 | macOS | Swift (`NSFontManager`) | 日本語ローカライズ名を含む完全なフォント一覧 |
-| Windows / Linux | `font-list` パッケージ | フォールバック |
+| Windows | PowerShell (レジストリ) | 追加依存なしでフォント名を取得 |
+| Linux | `fc-list` コマンド | fontconfig 経由でフォント名を取得 |
 
 ## 技術スタック
 
 - Electron 28
 - electron-builder（マルチプラットフォーム対応パッケージング）
-- font-list（Windows/Linux 向けフォント取得）
+- PowerShell / fc-list（Windows/Linux 向けフォント取得）
 - NSFontManager（macOS 向けネイティブフォント取得）

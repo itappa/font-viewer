@@ -97,8 +97,8 @@ async function loadFonts() {
       name: font.name,
       localizedName: font.localizedName || '',
       displayName: font.localizedName || font.name,
-      supportsJapanese: supportsJapanese(font.name),
-      isMonospace: isMonospace(font.name)
+      supportsJapanese: null,
+      isMonospace: null
     }));
     applyFilters();
   } catch (err) {
@@ -108,6 +108,28 @@ async function loadFonts() {
     loading.classList.remove('visible');
   }
 }
+
+function debounce(fn, delayMs = 120) {
+  let timerId = null;
+  return (...args) => {
+    if (timerId) {
+      clearTimeout(timerId);
+    }
+    timerId = setTimeout(() => fn(...args), delayMs);
+  };
+}
+
+function ensureFontClassification(font, { needsJapanese, needsMonospace }) {
+  if (needsJapanese && font.supportsJapanese === null) {
+    font.supportsJapanese = supportsJapanese(font.name);
+  }
+  if (needsMonospace && font.isMonospace === null) {
+    font.isMonospace = isMonospace(font.name);
+  }
+}
+
+const applyFiltersDebounced = debounce(applyFilters);
+const applyCatalogFiltersDebounced = debounce(applyCatalogFilters);
 
 // ========== Filters ==========
 document.querySelectorAll('.filter-pill').forEach(pill => {
@@ -126,6 +148,8 @@ document.querySelectorAll('.filter-pill').forEach(pill => {
 
 function applyFilters() {
   const search = searchInput.value.toLowerCase().trim();
+  const needsJapanese = activeFilters.has('japanese');
+  const needsMonospace = activeFilters.has('monospace') || activeFilters.has('proportional');
 
   filteredFonts = allFonts.filter(font => {
     if (search) {
@@ -133,6 +157,9 @@ function applyFilters() {
       const matchLocalized = font.localizedName.toLowerCase().includes(search);
       if (!matchName && !matchLocalized) return false;
     }
+
+    ensureFontClassification(font, { needsJapanese, needsMonospace });
+
     if (activeFilters.has('favorites') && !favorites.has(font.name)) return false;
     if (activeFilters.has('japanese') && !font.supportsJapanese) return false;
     if (activeFilters.has('monospace') && !font.isMonospace) return false;
@@ -148,7 +175,7 @@ function applyFilters() {
 // ========== Search ==========
 searchInput.addEventListener('input', () => {
   searchClear.classList.toggle('visible', searchInput.value.length > 0);
-  applyFilters();
+  applyFiltersDebounced();
 });
 
 searchClear.addEventListener('click', () => {
@@ -547,7 +574,7 @@ document.querySelectorAll('[data-catalog-filter]').forEach(pill => {
 
 catalogSearchInput.addEventListener('input', () => {
   catalogSearchClear.classList.toggle('visible', catalogSearchInput.value.length > 0);
-  applyCatalogFilters();
+  applyCatalogFiltersDebounced();
 });
 
 catalogSearchClear.addEventListener('click', () => {
@@ -559,6 +586,8 @@ catalogSearchClear.addEventListener('click', () => {
 
 function applyCatalogFilters() {
   const search = catalogSearchInput.value.toLowerCase().trim();
+  const needsJapanese = catalogFilters.has('japanese');
+  const needsMonospace = catalogFilters.has('monospace') || catalogFilters.has('proportional');
 
   catalogFilteredFonts = allFonts.filter(font => {
     if (search) {
@@ -566,6 +595,9 @@ function applyCatalogFilters() {
       const matchLocalized = font.localizedName.toLowerCase().includes(search);
       if (!matchName && !matchLocalized) return false;
     }
+
+    ensureFontClassification(font, { needsJapanese, needsMonospace });
+
     if (catalogFilters.has('favorites') && !favorites.has(font.name)) return false;
     if (catalogFilters.has('japanese') && !font.supportsJapanese) return false;
     if (catalogFilters.has('monospace') && !font.isMonospace) return false;
